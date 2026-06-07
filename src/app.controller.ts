@@ -10,6 +10,7 @@ export class AppController {
   async handleOrderPlaced(
     @Payload()
     payload: {
+      correlationId?: string;
       userId: number;
       email: string;
       username: string;

@@ -1,11 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { Logger } from 'nestjs-pino';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     AppModule,
     {
+      bufferLogs: true,
       transport: Transport.RMQ,
       options: {
         urls: [
@@ -19,6 +21,7 @@ async function bootstrap() {
       },
     },
   );
+  app.useLogger(app.get(Logger));
   app.listen();
   // const app = await NestFactory.create(AppModule);
   // await app.listen(3001);
